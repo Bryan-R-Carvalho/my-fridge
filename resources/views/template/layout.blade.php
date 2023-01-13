@@ -10,7 +10,7 @@
 </head>
 <body style="background-color: #fefefe">
     <header class="container-fluid header p-0 pb-3">
-        <nav class="navbar navbar-expand-sm py-2 " style="background-color: #e81515;" >
+        <nav class="navbar navbar-expand-sm py-2 " style="background: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);">
             <ul class="navbar-nav">
               <li class="nav-item ">
                 <a class="nav-link text-light" href="{{ url('/') }}">Home</a>
@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     
-    <footer class="fixed-bottom" style="background-color: #e81515">
+    <footer class="fixed-bottom" style="background: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);">
         <div class="text-center">
             <p class=" text-white" style="font-size:10px" >Copyright &copy; 2022 - My Fridge</p>
         </div>
