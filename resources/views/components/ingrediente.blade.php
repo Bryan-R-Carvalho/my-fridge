@@ -17,7 +17,6 @@
         // dd($ingredientes);
     ?>  
     @php
-        session_start();
         $items=[];
     @endphp
 
@@ -31,50 +30,49 @@
 
     @foreach($items as $key => $value)
         <div class="form-check border">
-            
-            <input class="form-check-input" type="checkbox" value={{ $value['id'] }} id={{ $value['id'] }}>
+           
+            <input class="form-check-input"
+            type="checkbox"
+            value={{ $value['id'] }}
+            id={{ $value['id'] }}
+            onclick="handleCheck({{ $value['id'] }})">
+
             <label class="form-check-label" for={{ $value['id'] }}>
                 {{ $value['nome'] }}</label>
-            <!-- <a href="?add={{$key}}">Add</a> -->
             <script>
-                var bt = document.getElementById("{{ $value['id'] }}");
-                bt.onclick = () => {
-                    console.log("{{ $value['id'] }}");
-                   document.cookie="ingrediente={{ $value['id'] }}";
+                var cookies = [];
+                var cookieName = 'ingrediente';
+                checkCookie();
+                function handleCheck(val){
+                    const checkBox = document.getElementById(val);
+                    
+                    if (checkBox.checked == false){
+                        const index = cookies.indexOf(val);
+                        if(index > -1){
+                            cookies.splice(index, 1);}
+                            setCookie(cookies);
+                        
+                    } else {
+                        cookies.push(val);            
+                        setCookie(cookies);
+                    }
+                }
+                function setCookie(cookies){
+                    var date = new Date();
+                    date.setTime(date.getTime() + (30*24*60*60*1000));
+                    var expires = "expires=" + date.toUTCString();
+                    document.cookie = `${cookieName}=${cookies}; ${expires}; path=/`;
+                }
+                function checkCookie(){
+                    if(document.cookie.split('; ').some((item) => item.startsWith(`${cookieName}=`))){
+                        var cookie = document.cookie.split('; ').find(row => row.startsWith(`${cookieName}=`)).split('=')[1];
+                        console.log(cookie);
+                        cookies = cookie.split(',');
+                        for (var i = 0; i < cookies.length; i++) {
+                            document.getElementById(cookies[i]).checked = true;
+                        }
+                    }
                 }
             </script>
         </div>
-
     @endforeach
-    @php
-        setcookie("ingrediente", "ovo", time() + (86400 * 30), "/");
-    @endphp
-    <!-- @php
-        if(isset($_GET['add'])){
-            $ingredienteId = (int) $_GET['add'];
-            if(isset($items[$ingredienteId])){
-                $ingrediente = $items[$ingredienteId];
-                if(!isset($_SESSION['fridge'])){
-                    $_SESSION['fridge'] = [];
-                }
-                array_push($_SESSION['fridge'], $ingrediente);
-                echo '<script>console.log("added '.$ingrediente['nome'].' to fridge")</script>';
-            }
-        }
-    @endphp  -->
-    <!-- create a cookie -->
-    <!-- @php
-        if(isset($_GET['add'])){
-            $ingredienteId = (int) $_GET['add'];
-            if(isset($items[$ingredienteId])){
-                $ingrediente = $items[$ingredienteId];
-                if(!isset($_COOKIE['fridge'])){
-                    setcookie('fridge', json_encode([]), time() + (86400 * 30), "/");
-                }
-                $fridge = json_decode($_COOKIE['fridge']);
-                array_push($fridge, $ingrediente);
-                setcookie($ingrediente['id'], json_encode($ingrediente), time() + (86400 * 30), "/");
-                echo '<script>console.log("added '.$ingrediente['nome'].' to fridge")</script>';
-            }
-        }
-    @endphp -->
